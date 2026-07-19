@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Omnicoreops | 3D Experience</title>
+    <title>Omnicoreops | Immersive IT Solutions</title>
     <style>
         :root {
             --primary: #00ffcc;
             --bg-dark: #0a0b10;
             --text-light: #ffffff;
+            --text-muted: #8e90a6;
             --card-bg: #141622;
         }
 
@@ -37,10 +38,19 @@
         }
 
         .logo {
-            font-size: 24px;
-            font-weight: 800;
+            font-size: 32px;
+            font-weight: 900;
             color: var(--primary);
-            text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+
+        .logo:hover {
+            transform: rotateY(20deg) scale(1.1);
+            text-shadow: 0 0 20px var(--primary);
         }
 
         nav a {
@@ -57,14 +67,14 @@
         }
 
         .hero {
-            padding: 150px 0;
+            padding: 120px 0;
             text-align: center;
             transform-style: preserve-3d;
             animation: zoomIn 1.5s ease-out;
         }
 
         .hero h1 {
-            font-size: 72px;
+            font-size: 64px;
             font-weight: 900;
             margin-bottom: 20px;
             transform: translateZ(50px);
@@ -72,8 +82,8 @@
         }
 
         .hero p {
-            font-size: 22px;
-            color: #a0a5c0;
+            font-size: 20px;
+            color: var(--text-muted);
             max-width: 600px;
             margin: 0 auto 40px;
             transform: translateZ(20px);
@@ -100,40 +110,72 @@
             transform: translateZ(40px) scale(1.05);
         }
 
-        .features {
+        .services {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 40px;
-            padding: 80px 0;
+            padding: 100px 0;
             transform-style: preserve-3d;
         }
 
-        .card {
+        .service-card {
             background-color: var(--card-bg);
-            padding: 40px;
+            padding: 50px;
             border-radius: 16px;
             transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
             transform-style: preserve-3d;
             border: 1px solid rgba(255, 255, 255, 0.05);
+            text-decoration: none;
+            color: var(--text-light);
+            display: block;
         }
 
-        .card:hover {
+        .service-card:hover {
             transform: rotateX(10deg) rotateY(-10deg) translateZ(20px);
             box-shadow: -20px 20px 40px rgba(0, 0, 0, 0.5),
                         0 0 30px rgba(0, 255, 204, 0.3);
             border-color: var(--primary);
         }
 
-        .card h3 {
-            font-size: 26px;
-            margin-bottom: 15px;
+        .service-card h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
             color: var(--primary);
             transform: translateZ(30px);
+            position: relative;
         }
 
-        .card p {
-            color: #8e90a6;
+        .service-card h3::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 3px;
+            background-color: var(--primary);
+            margin-top: 10px;
+            transition: width 0.3s;
+        }
+
+        .service-card:hover h3::after {
+            width: 80px;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
             transform: translateZ(10px);
+            line-height: 1.8;
+        }
+
+        .service-details {
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--primary);
+            opacity: 0;
+            transform: translateZ(15px);
+            transition: opacity 0.3s;
+        }
+
+        .service-card:hover .service-details {
+            opacity: 1;
         }
 
         @keyframes fadeInDown {
@@ -150,34 +192,46 @@
 <body>
     <div class="container">
         <header>
-            <div class="logo">Omnicoreops</div>
+            <div class="logo" id="mainLogo">Omnicoreops</div>
             <nav>
                 <a href="#services">Services</a>
                 <a href="#about">About</a>
-                <a href="#contact">Contact</a>
             </nav>
         </header>
 
         <section class="hero">
             <h1>Next-Gen IT Infrastructure</h1>
-            <p>Experience the power of immersive 3D operations management and future-ready IT solutions.</p>
-            <a href="#contact" class="btn">Explore Experience</a>
+            <p>Experience the power of immersive operations management and future-ready IT solutions.</p>
+            <a href="#services" class="btn">Explore Services</a>
         </section>
 
-        <section class="features">
-            <div class="card">
+        <section class="services" id="services">
+            <a href="#cloud" class="service-card">
                 <h3>Cloud Solutions</h3>
-                <p>Scale your business with highly immersive and optimized cloud environments.</p>
-            </div>
-            <div class="card">
+                <p>Scale your business with highly immersive and optimized cloud environments. We ensure seamless migration, robust architecture, and high availability.</p>
+                <div class="service-details">Learn More →</div>
+            </a>
+            <a href="#cybersecurity" class="service-card">
                 <h3>Cybersecurity</h3>
-                <p>Fortify your digital operations with advanced multi-layered protection.</p>
-            </div>
-            <div class="card">
+                <p>Fortify your digital operations with advanced multi-layered protection. We provide threat detection, vulnerability assessments, and strict compliance measures.</p>
+                <div class="service-details">Learn More →</div>
+            </a>
+            <a href="#operations" class="service-card">
                 <h3>24/7 Operations</h3>
-                <p>Experience real-time monitoring and uninterrupted support for your architecture.</p>
-            </div>
+                <p>Experience real-time monitoring and uninterrupted support for your architecture. Our operations center ensures your systems are always running efficiently.</p>
+                <div class="service-details">Learn More →</div>
+            </a>
         </section>
     </div>
+
+    <script>
+        const logo = document.getElementById('mainLogo');
+        logo.addEventListener('click', () => {
+            logo.style.transform = 'rotateY(360deg)';
+            setTimeout(() => {
+                logo.style.transform = 'rotateY(0deg)';
+            }, 500);
+        });
+    </script>
 </body>
 </html>
