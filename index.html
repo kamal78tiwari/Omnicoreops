@@ -3,493 +3,326 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Omnicoreops - Interactive 3D Tech Hub</title>
+    <title>Omnicoreops - Advanced Tech Solutions</title>
     <style>
-        /* Base Styles & Modern Reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             scroll-behavior: smooth;
         }
-
         body {
-            background-color: #0b0f19;
-            color: #f3f4f6;
+            background-color: #0d1117;
+            color: #c9d1d9;
             overflow-x: hidden;
         }
-
-        /* Navbar & 3D Logo */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 1.5rem 5%;
-            background: rgba(11, 15, 25, 0.8);
-            backdrop-filter: blur(10px);
+            background: rgba(13, 17, 23, 0.9);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid #30363d;
         }
-
-        .logo-container {
-            perspective: 1000px;
-            cursor: pointer;
-        }
-
-        .logo-3d {
+        .logo {
             font-size: 1.8rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-style: preserve-3d;
-            display: inline-block;
+            color: #58a6ff;
+            cursor: pointer;
+            transition: transform 0.5s;
         }
-
-        .logo-3d.rotate {
-            transform: rotateY(360deg);
+        .logo:hover {
+            transform: rotateY(15deg);
         }
-
         nav a {
-            color: #9ca3af;
+            color: #8b949e;
             text-decoration: none;
             margin-left: 2rem;
             transition: color 0.3s;
-            font-size: 0.95rem;
         }
-
         nav a:hover {
-            color: #00f2fe;
+            color: #58a6ff;
         }
 
-        /* Hero Section */
-        .hero {
+                .hero {
             min-height: 80vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 0 1rem;
+            padding: 2rem;
             margin-top: 80px;
-            background: radial-gradient(circle at center, rgba(79, 172, 254, 0.1) 0%, transparent 70%);
+            position: relative;
+            background: #161b22;
         }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            letter-spacing: -1px;
-        }
-
-        .hero p {
-            color: #9ca3af;
-            font-size: 1.2rem;
-            max-width: 600px;
+        .hero-slider {
+            width: 100%;
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
             margin-bottom: 2rem;
         }
+        .slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 100%;
+            transition: left 1s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+        .slide.active {
+            left: 0;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-bottom: 2rem;
+        }
+        .btn {
+            background-color: #238636;
+            color: #ffffff;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #2ea043;
+        }
 
-        /* 3D Grid & Cards Layout */
+                .section {
+            padding: 5rem 5%;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #ffffff;
+        }
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2.5rem;
-            padding: 5% 5% 10% 5%;
-            max-width: 1400px;
-            margin: 0 auto;
-            perspective: 1000px;
+        }
+        .service-card {
+            background: #161b22;
+            padding: 2.5rem;
+            border-radius: 10px;
+            border: 1px solid #30363d;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            border-color: #58a6ff;
+        }
+        .service-card h3 {
+            margin-bottom: 1rem;
+            color: #58a6ff;
+        }
+        .service-card p {
+            line-height: 1.6;
         }
 
-        .card-wrapper {
-            text-decoration: none;
-            color: inherit;
+                .details-content {
+            display: none;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #30363d;
+        }
+        .details-content.active {
             display: block;
         }
-
-        .service-card {
-            background: rgba(17, 24, 39, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            overflow: hidden;
-            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-            transform-style: preserve-3d;
-            cursor: pointer;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Interactive 3D Tilt Hover */
-        .service-card:hover {
-            transform: translateY(-10px) rotateX(4deg) rotateY(-4deg);
-            border-color: rgba(0, 242, 254, 0.4);
-            box-shadow: 0 20px 40px rgba(0, 242, 254, 0.15);
-        }
-
-        /* Card Image Container */
-        .card-img-holder {
-            width: 100%;
-            height: 200px;
-            background: #1f2937;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* dynamic placeholder style */
-        .card-img-holder img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.8;
-            transition: transform 0.5s;
-        }
-
-        .service-card:hover .card-img-holder img {
-            transform: scale(1.05);
-            opacity: 1;
-        }
-
-        .card-content {
-            padding: 2rem;
-            flex-grow: 1;
-            transform: translateZ(30px); /* Gives text 3D depth */
-        }
-
-        .card-content h3 {
-            font-size: 1.4rem;
-            margin-bottom: 0.75rem;
-            color: #ffffff;
-        }
-
-        .card-content p {
-            color: #9ca3af;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-        }
-
-        .learn-more {
-            color: #00f2fe;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        /* Detailed Content Sections */
-        .detail-section {
-            padding: 8rem 5% 4rem 5%;
-            max-width: 1200px;
+        .about-text, .contact-form {
+            max-width: 800px;
             margin: 0 auto;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            line-height: 1.8;
+            font-size: 1.1rem;
         }
-
-        .detail-container {
+        .contact-form form {
             display: flex;
             flex-direction: column;
-            gap: 2rem;
-            background: rgba(17, 24, 39, 0.4);
-            padding: 3rem;
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-        }
-
-        .detail-header {
-            display: flex;
-            align-items: center;
             gap: 1.5rem;
+            margin-top: 2rem;
         }
-
-        .detail-header h2 {
-            font-size: 2.5rem;
-            background: linear-gradient(135deg, #ffffff 0%, #9ca3af 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .detail-body {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        @media (max-width: 768px) {
-            .detail-body { grid-template-columns: 1fr; }
-            .hero h1 { font-size: 2.5rem; }
-        }
-
-        .detail-img-box {
+        .contact-form input, .contact-form textarea {
             width: 100%;
-            height: 350px;
-            background: #1f2937;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            padding: 1rem;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 5px;
+            color: #c9d1d9;
         }
-
-        .detail-img-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .contact-form textarea {
+            height: 150px;
         }
-
-        .detail-info h4 {
-            font-size: 1.2rem;
-            color: #00f2fe;
-            margin-bottom: 1rem;
-        }
-
-        .detail-info ul {
-            list-style: none;
-            margin-top: 1rem;
-        }
-
-        .detail-info ul li {
-            margin-bottom: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            color: #d1d5db;
-        }
-
-        .detail-info ul li::before {
-            content: "✓";
-            color: #00f2fe;
-            font-weight: bold;
-        }
-
         footer {
             text-align: center;
             padding: 3rem;
-            color: #4b5563;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            font-size: 0.9rem;
+            background: #161b22;
+            border-top: 1px solid #30363d;
+            margin-top: 5rem;
         }
     </style>
 </head>
 <body>
 
-    <!-- Header Navigation -->
     <header>
-        <div class="logo-container" onclick="animateLogo()">
-            <div class="logo-3d" id="logo">Omnicoreops</div>
-        </div>
+        <div class="logo">Omnicoreops</div>
         <nav>
-            <a href="#cloud">Cloud Solutions</a>
-            <a href="#cyber">Cybersecurity</a>
-            <a href="#ops">24/7 Operations</a>
-            <a href="#ai">AI Solutions</a>
+            <a href="#home">Home</a>
+            <a href="#services">Services</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
+    <section id="home" class="hero">
+        <div class="hero-slider">
+            <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80');"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80');"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=1200&q=80');"></div>
+        </div>
         <h1>Next-Gen Infrastructure Solutions</h1>
-        <p>Explore our highly scalable, secure, and smart architecture ecosystems designed for modern enterprises.</p>
+        <p>Providing cutting-edge, secure, and highly scalable technology architectures for modern enterprises.</p>
+        <a href="#services" class="btn">Explore Services</a>
     </section>
 
-    <!-- Interactive 3D Service Cards Grid -->
-    <main class="services-grid">
-        
-        <!-- Cloud Card -->
-        <a href="#cloud" class="card-wrapper">
-            <div class="service-card">
-                <div class="card-img-holder">
-                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80" alt="Cloud Solutions">
-                </div>
-                <div class="card-content">
-                    <h3>Cloud Solutions</h3>
-                    <p>Scalable, fault-tolerant infrastructure built on leading global cloud ecosystems architecture.</p>
-                    <div class="learn-more">Explore Solution →</div>
+    <section id="services" class="section">
+        <h2 class="section-title">Our Services</h2>
+        <div class="services-grid">
+            <div class="service-card" onclick="toggleDetails(1)">
+                <h3>Cloud Solutions</h3>
+                <p>Enterprise cloud hubs delivering automated multi-cloud infrastructures.</p>
+                <div id="details-1" class="details-content">
+                    <p>We migrate your legacy applications to modern cloud environments without downtime. Our systems scale automatically based on load.</p>
+                    <p><strong>Frameworks:</strong> AWS, Azure, GCP Infrastructure Delivery, Automated Data Pipeline Ingestion.</p>
                 </div>
             </div>
-        </a>
-
-        <!-- Cybersecurity Card -->
-        <a href="#cyber" class="card-wrapper">
-            <div class="service-card">
-                <div class="card-img-holder">
-                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=600&q=80" alt="Cybersecurity">
-                </div>
-                <div class="card-content">
-                    <h3>Cybersecurity</h3>
-                    <p>End-to-end continuous threat monitoring, zero-trust deployments, and absolute perimeter defense.</p>
-                    <div class="learn-more">Explore Solution →</div>
+            <div class="service-card" onclick="toggleDetails(2)">
+                <h3>Cybersecurity</h3>
+                <p>Advanced zero-trust frameworks and real-time threat detection.</p>
+                <div id="details-2" class="details-content">
+                    <p>We ensure absolute perimeter defense by encrypting data and using advanced AI firewalls to prevent unauthorized access.</p>
+                    <p><strong>Parameters:</strong> Real-Time Anomaly Mitigation, End-to-End Advanced Encryption, Compliance Audits.</p>
                 </div>
             </div>
-        </a>
-
-        <!-- Operations Card -->
-        <a href="#ops" class="card-wrapper">
-            <div class="service-card">
-                <div class="card-img-holder">
-                    <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80" alt="24/7 Operations">
-                </div>
-                <div class="card-content">
-                    <h3>24/7 Operations</h3>
-                    <p>Uninterrupted, real-time monitoring and autonomous incident remediation frameworks.</p>
-                    <div class="learn-more">Explore Solution →</div>
+            <div class="service-card" onclick="toggleDetails(3)">
+                <h3>24/7 Operations</h3>
+                <p>Always-on NOC operations ensuring 99.99% uptime SLA.</p>
+                <div id="details-3" class="details-content">
+                    <p>Our dedicated operations center monitors your servers every second to ensure that digital services run uninterrupted 365 days a year.</p>
+                    <p><strong>Operations:</strong> Autonomous Incident Self-Healing, Global Live Monitoring Dashboards.</p>
                 </div>
             </div>
-        </a>
-
-        <!-- AI Solutions Card (New Section) -->
-        <a href="#ai" class="card-wrapper">
-            <div class="service-card">
-                <div class="card-img-holder">
-                    <img src="https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=600&q=80" alt="AI Solutions">
-                </div>
-                <div class="card-content">
-                    <h3>AI Solutions</h3>
-                    <p>Smart generative workflows, autonomous predictive analysis, and intelligent system scaling.</p>
-                    <div class="learn-more">Explore Solution →</div>
-                </div>
-            </div>
-        </a>
-
-    </main>
-
-    <!-- Detailed Sections With Images & Solutions -->
-    
-    <!-- Cloud Details -->
-    <section id="cloud" class="detail-section">
-        <div class="detail-container">
-            <div class="detail-header">
-                <h2>Cloud Solutions Architecture</h2>
-            </div>
-            <div class="detail-body">
-                <div class="detail-info">
-                    <h4>Enterprise Cloud Hub</h4>
-                    <p>हम आपकी लेगेसी एप्लिकेशन्स को आधुनिक क्लाउड में बिना किसी डाउनटाइम के माइग्रेट करते हैं। यह सिस्टम लोड के अनुसार ऑटोमैटिकली स्केल होता है।</p>
-                    <ul>
-                        <li>Multi-Cloud Infrastructure Delivery</li>
-                        <li>Automated Data Pipeline Ingestion</li>
-                        <li>Cost-Efficient Workload Distribution</li>
-                    </ul>
-                </div>
-                <div class="detail-img-box">
-                    <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=80" alt="Cloud Architecture Detail">
+            <div class="service-card" onclick="toggleDetails(4)">
+                <h3>AI Solutions</h3>
+                <p>Cognitive systems and intelligent automation for generative workflows.</p>
+                <div id="details-4" class="details-content">
+                    <p>Integrate generative AI and predictive models into your operations to optimize workflows and transition into autonomous system scaling.</p>
+                    <p><strong>Solutions:</strong> Generative AI Engine Pipelines, Predictive Fault Forecasting, Smart Automations.</p>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- Cybersecurity Details -->
-    <section id="cyber" class="detail-section">
-        <div class="detail-container">
-            <div class="detail-header">
-                <h2>Perimeter & Shield Security</h2>
-            </div>
-            <div class="detail-body">
-                <div class="detail-img-box">
-                    <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80" alt="Cybersecurity Detail">
-                </div>
-                <div class="detail-info">
-                    <h4>Zero-Trust Framework</h4>
-                    <p>सुरक्षा के साथ कोई समझौता नहीं। हम आपके डेटा को एन्क्रिप्ट करते हैं और अनधिकृत एक्सेस को रोकने के लिए एडवांस्ड फायरवॉल और AI थ्रेट डिटेक्टर का उपयोग करते हैं।</p>
-                    <ul>
-                        <li>Real-Time Anomaly Mitigation</li>
-                        <li>End-to-End Advanced Encryption</li>
-                        <li>Compliance & Threat Audit Handling</li>
-                    </ul>
-                </div>
-            </div>
+        <section id="about" class="section">
+        <h2 class="section-title">About Us</h2>
+        <div class="about-text">
+            <p>At Omnicoreops, we are dedicated to architecting the future of IT infrastructure. We empower modern enterprises by transitioning them into highly scalable, secure, and automated ecosystems. Our team consists of seasoned experts in cloud architecture, cybersecurity, network operations, and artificial intelligence, ensuring that your business stays ahead of the curve in the digital era.</p>
         </div>
     </section>
 
-    <!-- Operations Details -->
-    <section id="ops" class="detail-section">
-        <div class="detail-container">
-            <div class="detail-header">
-                <h2>24/7 Operations Control</h2>
-            </div>
-            <div class="detail-body">
-                <div class="detail-info">
-                    <h4>Always-On Operations Centre</h4>
-                    <p>हमारी नोक (NOC) टीम और ऑटोमेटेड बॉट्स आपके सर्वर की सेहत पर हर सेकंड नज़र रखते हैं ताकि आपकी डिजिटल सेवाएं बिना रुके 365 दिन चलती रहें।</p>
-                    <ul>
-                        <li>99.99% Uptime SLA Guarantee</li>
-                        <li>Autonomous Incident Self-Healing</li>
-                        <li>Global Live Monitoring Dashboard</li>
-                    </ul>
-                </div>
-                <div class="detail-img-box">
-                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" alt="Operations Detail">
-                </div>
-            </div>
+    <section id="contact" class="section">
+        <h2 class="section-title">Contact Us</h2>
+        <div class="contact-form">
+            <p>Have questions or interested in partnering with us? Reach out and our team will get back to you shortly.</p>
+            <form action="#" method="POST">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Your Message" required></textarea>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
         </div>
     </section>
 
-    <!-- AI Solutions Details (New) -->
-    <section id="ai" class="detail-section">
-        <div class="detail-container">
-            <div class="detail-header">
-                <h2>Intelligent AI Workflows</h2>
-            </div>
-            <div class="detail-body">
-                <div class="detail-img-box">
-                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80" alt="AI Technology Detail">
-                </div>
-                <div class="detail-info">
-                    <h4>Cognitive Systems & Automation</h4>
-                    <p>आने वाले समय की मांग के अनुसार सिस्टम में जेनरेटिव एआई और प्रेडिक्टिव मॉडल्स का एकीकरण, जो आपके ऑपरेशन्स को स्मार्ट और ऑटो-पायलट मोड पर ले जाता है।</p>
-                    <ul>
-                        <li>Generative AI Engine Pipelines</li>
-                        <li>Predictive Fault & Traffic Forecasting</li>
-                        <li>Smart Custom Intent Automations</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
     <footer>
-        <p>&copy; 2026 Omnicoreops. All rights reserved. Architecting the future.</p>
+        <p>&copy; 2026 Omnicoreops. All rights reserved.</p>
     </footer>
 
-    <!-- JavaScript for Interactions -->
     <script>
-        // 3D Logo Rotation Animation
-        function animateLogo() {
-            const logo = document.getElementById('logo');
-            logo.classList.add('rotate');
-            setTimeout(() => {
-                logo.classList.remove('rotate');
-            }, 800);
-        }
-
-        // Vanilla JavaScript 3D Tilt Effect on Cards (Mouse movement)
-        const cards = document.querySelectorAll('.service-card');
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
         
-        cards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left; // mouse position inside card
-                const y = e.clientY - rect.top;
-                
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                
-                // Calculate tilt angles based on mouse offset from center
-                const rotateX = ((centerY - y) / centerY) * 10; // max 10 deg
-                const rotateY = ((x - centerX) / centerX) * 10;
-                
-                card.style.transform = `translateY(-10px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
-            });
-        });
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        setInterval(nextSlide, 3000);
+
+        function toggleDetails(id) {
+            const content = document.getElementById('details-' + id);
+            content.classList.toggle('active');
+        }
     </script>
 </body>
 </html>
+
+<section id="privacy" class="section">
+    <h2 class="section-title">Privacy Policy</h2>
+    <div class="about-text">
+        <p>Your privacy is important to us. It is Omnicoreops's policy to respect your privacy regarding any information we may collect from you across our website, and other sites we own and operate.</p>
+        <p>We only ask for personal information when we truly need it to provide a service to you. We collect it by fair and lawful means, with your knowledge and consent. We also let you know why we’re collecting it and how it will be used.</p>
+        <p>We only retain collected information for as long as necessary to provide you with your requested service. What data we store, we’ll protect within commercially acceptable means to prevent loss and theft, as well as unauthorized access, disclosure, copying, use, or modification.</p>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+    
