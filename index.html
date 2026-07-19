@@ -3,234 +3,492 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Omnicoreops | Immersive IT Solutions</title>
+    <title>Omnicoreops - Interactive 3D Tech Hub</title>
     <style>
-        :root {
-            --primary: #00ffcc;
-            --bg-dark: #0a0b10;
-            --text-light: #ffffff;
-            --text-muted: #8e90a6;
-            --card-bg: #141622;
+        /* Base Styles & Modern Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-dark);
-            color: var(--text-light);
+            background-color: #0b0f19;
+            color: #f3f4f6;
             overflow-x: hidden;
-            perspective: 1000px;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
+        /* Navbar & 3D Logo */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 30px 0;
-            animation: fadeInDown 1s ease-out;
+            padding: 1.5rem 5%;
+            background: rgba(11, 15, 25, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .logo {
-            font-size: 32px;
-            font-weight: 900;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: -1px;
+        .logo-container {
+            perspective: 1000px;
             cursor: pointer;
-            transform-style: preserve-3d;
-            transition: transform 0.5s;
         }
 
-        .logo:hover {
-            transform: rotateY(20deg) scale(1.1);
-            text-shadow: 0 0 20px var(--primary);
+        .logo-3d {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+            display: inline-block;
+        }
+
+        .logo-3d.rotate {
+            transform: rotateY(360deg);
         }
 
         nav a {
-            color: var(--text-light);
-            margin-left: 30px;
+            color: #9ca3af;
             text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s;
+            margin-left: 2rem;
+            transition: color 0.3s;
+            font-size: 0.95rem;
         }
 
         nav a:hover {
-            color: var(--primary);
-            text-shadow: 0 0 8px var(--primary);
+            color: #00f2fe;
         }
 
+        /* Hero Section */
         .hero {
-            padding: 120px 0;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            transform-style: preserve-3d;
-            animation: zoomIn 1.5s ease-out;
+            padding: 0 1rem;
+            margin-top: 80px;
+            background: radial-gradient(circle at center, rgba(79, 172, 254, 0.1) 0%, transparent 70%);
         }
 
         .hero h1 {
-            font-size: 64px;
-            font-weight: 900;
-            margin-bottom: 20px;
-            transform: translateZ(50px);
-            letter-spacing: -2px;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
         }
 
         .hero p {
-            font-size: 20px;
-            color: var(--text-muted);
+            color: #9ca3af;
+            font-size: 1.2rem;
             max-width: 600px;
-            margin: 0 auto 40px;
-            transform: translateZ(20px);
+            margin-bottom: 2rem;
         }
 
-        .btn {
-            background-color: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-            padding: 16px 32px;
-            border-radius: 8px;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s;
-            transform: translateZ(30px);
-            box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
-        }
-
-        .btn:hover {
-            background-color: var(--primary);
-            color: var(--bg-dark);
-            box-shadow: 0 0 25px var(--primary);
-            transform: translateZ(40px) scale(1.05);
-        }
-
-        .services {
+        /* 3D Grid & Cards Layout */
+        .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            padding: 100px 0;
-            transform-style: preserve-3d;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            padding: 5% 5% 10% 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            perspective: 1000px;
+        }
+
+        .card-wrapper {
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
 
         .service-card {
-            background-color: var(--card-bg);
-            padding: 50px;
-            border-radius: 16px;
-            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-            transform-style: preserve-3d;
+            background: rgba(17, 24, 39, 0.7);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            text-decoration: none;
-            color: var(--text-light);
-            display: block;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transform-style: preserve-3d;
+            cursor: pointer;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
+        /* Interactive 3D Tilt Hover */
         .service-card:hover {
-            transform: rotateX(10deg) rotateY(-10deg) translateZ(20px);
-            box-shadow: -20px 20px 40px rgba(0, 0, 0, 0.5),
-                        0 0 30px rgba(0, 255, 204, 0.3);
-            border-color: var(--primary);
+            transform: translateY(-10px) rotateX(4deg) rotateY(-4deg);
+            border-color: rgba(0, 242, 254, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 242, 254, 0.15);
         }
 
-        .service-card h3 {
-            font-size: 28px;
-            margin-bottom: 20px;
-            color: var(--primary);
-            transform: translateZ(30px);
+        /* Card Image Container */
+        .card-img-holder {
+            width: 100%;
+            height: 200px;
+            background: #1f2937;
             position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .service-card h3::after {
-            content: '';
-            display: block;
-            width: 40px;
-            height: 3px;
-            background-color: var(--primary);
-            margin-top: 10px;
-            transition: width 0.3s;
+        /* dynamic placeholder style */
+        .card-img-holder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+            transition: transform 0.5s;
         }
 
-        .service-card:hover h3::after {
-            width: 80px;
-        }
-
-        .service-card p {
-            color: var(--text-muted);
-            transform: translateZ(10px);
-            line-height: 1.8;
-        }
-
-        .service-details {
-            margin-top: 20px;
-            font-size: 14px;
-            color: var(--primary);
-            opacity: 0;
-            transform: translateZ(15px);
-            transition: opacity 0.3s;
-        }
-
-        .service-card:hover .service-details {
+        .service-card:hover .card-img-holder img {
+            transform: scale(1.05);
             opacity: 1;
         }
 
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
+        .card-content {
+            padding: 2rem;
+            flex-grow: 1;
+            transform: translateZ(30px); /* Gives text 3D depth */
         }
 
-        @keyframes zoomIn {
-            from { opacity: 0; transform: scale(0.9) translateZ(-100px); }
-            to { opacity: 1; transform: scale(1) translateZ(0); }
+        .card-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.75rem;
+            color: #ffffff;
+        }
+
+        .card-content p {
+            color: #9ca3af;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .learn-more {
+            color: #00f2fe;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Detailed Content Sections */
+        .detail-section {
+            padding: 8rem 5% 4rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .detail-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            background: rgba(17, 24, 39, 0.4);
+            padding: 3rem;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .detail-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .detail-header h2 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, #9ca3af 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .detail-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .detail-body { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.5rem; }
+        }
+
+        .detail-img-box {
+            width: 100%;
+            height: 350px;
+            background: #1f2937;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .detail-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .detail-info h4 {
+            font-size: 1.2rem;
+            color: #00f2fe;
+            margin-bottom: 1rem;
+        }
+
+        .detail-info ul {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .detail-info ul li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: #d1d5db;
+        }
+
+        .detail-info ul li::before {
+            content: "✓";
+            color: #00f2fe;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem;
+            color: #4b5563;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="logo" id="mainLogo">Omnicoreops</div>
-            <nav>
-                <a href="#services">Services</a>
-                <a href="#about">About</a>
-            </nav>
-        </header>
 
-        <section class="hero">
-            <h1>Next-Gen IT Infrastructure</h1>
-            <p>Experience the power of immersive operations management and future-ready IT solutions.</p>
-            <a href="#services" class="btn">Explore Services</a>
-        </section>
+    <!-- Header Navigation -->
+    <header>
+        <div class="logo-container" onclick="animateLogo()">
+            <div class="logo-3d" id="logo">Omnicoreops</div>
+        </div>
+        <nav>
+            <a href="#cloud">Cloud Solutions</a>
+            <a href="#cyber">Cybersecurity</a>
+            <a href="#ops">24/7 Operations</a>
+            <a href="#ai">AI Solutions</a>
+        </nav>
+    </header>
 
-        <section class="services" id="services">
-            <a href="#cloud" class="service-card">
-                <h3>Cloud Solutions</h3>
-                <p>Scale your business with highly immersive and optimized cloud environments. We ensure seamless migration, robust architecture, and high availability.</p>
-                <div class="service-details">Learn More →</div>
-            </a>
-            <a href="#cybersecurity" class="service-card">
-                <h3>Cybersecurity</h3>
-                <p>Fortify your digital operations with advanced multi-layered protection. We provide threat detection, vulnerability assessments, and strict compliance measures.</p>
-                <div class="service-details">Learn More →</div>
-            </a>
-            <a href="#operations" class="service-card">
-                <h3>24/7 Operations</h3>
-                <p>Experience real-time monitoring and uninterrupted support for your architecture. Our operations center ensures your systems are always running efficiently.</p>
-                <div class="service-details">Learn More →</div>
-            </a>
-        </section>
-    </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Next-Gen Infrastructure Solutions</h1>
+        <p>Explore our highly scalable, secure, and smart architecture ecosystems designed for modern enterprises.</p>
+    </section>
 
+    <!-- Interactive 3D Service Cards Grid -->
+    <main class="services-grid">
+        
+        <!-- Cloud Card -->
+        <a href="#cloud" class="card-wrapper">
+            <div class="service-card">
+                <div class="card-img-holder">
+                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80" alt="Cloud Solutions">
+                </div>
+                <div class="card-content">
+                    <h3>Cloud Solutions</h3>
+                    <p>Scalable, fault-tolerant infrastructure built on leading global cloud ecosystems architecture.</p>
+                    <div class="learn-more">Explore Solution →</div>
+                </div>
+            </div>
+        </a>
+
+        <!-- Cybersecurity Card -->
+        <a href="#cyber" class="card-wrapper">
+            <div class="service-card">
+                <div class="card-img-holder">
+                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=600&q=80" alt="Cybersecurity">
+                </div>
+                <div class="card-content">
+                    <h3>Cybersecurity</h3>
+                    <p>End-to-end continuous threat monitoring, zero-trust deployments, and absolute perimeter defense.</p>
+                    <div class="learn-more">Explore Solution →</div>
+                </div>
+            </div>
+        </a>
+
+        <!-- Operations Card -->
+        <a href="#ops" class="card-wrapper">
+            <div class="service-card">
+                <div class="card-img-holder">
+                    <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80" alt="24/7 Operations">
+                </div>
+                <div class="card-content">
+                    <h3>24/7 Operations</h3>
+                    <p>Uninterrupted, real-time monitoring and autonomous incident remediation frameworks.</p>
+                    <div class="learn-more">Explore Solution →</div>
+                </div>
+            </div>
+        </a>
+
+        <!-- AI Solutions Card (New Section) -->
+        <a href="#ai" class="card-wrapper">
+            <div class="service-card">
+                <div class="card-img-holder">
+                    <img src="https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=600&q=80" alt="AI Solutions">
+                </div>
+                <div class="card-content">
+                    <h3>AI Solutions</h3>
+                    <p>Smart generative workflows, autonomous predictive analysis, and intelligent system scaling.</p>
+                    <div class="learn-more">Explore Solution →</div>
+                </div>
+            </div>
+        </a>
+
+    </main>
+
+    <!-- Detailed Sections With Images & Solutions -->
+    
+    <!-- Cloud Details -->
+    <section id="cloud" class="detail-section">
+        <div class="detail-container">
+            <div class="detail-header">
+                <h2>Cloud Solutions Architecture</h2>
+            </div>
+            <div class="detail-body">
+                <div class="detail-info">
+                    <h4>Enterprise Cloud Hub</h4>
+                    <p>हम आपकी लेगेसी एप्लिकेशन्स को आधुनिक क्लाउड में बिना किसी डाउनटाइम के माइग्रेट करते हैं। यह सिस्टम लोड के अनुसार ऑटोमैटिकली स्केल होता है।</p>
+                    <ul>
+                        <li>Multi-Cloud Infrastructure Delivery</li>
+                        <li>Automated Data Pipeline Ingestion</li>
+                        <li>Cost-Efficient Workload Distribution</li>
+                    </ul>
+                </div>
+                <div class="detail-img-box">
+                    <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=800&q=80" alt="Cloud Architecture Detail">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cybersecurity Details -->
+    <section id="cyber" class="detail-section">
+        <div class="detail-container">
+            <div class="detail-header">
+                <h2>Perimeter & Shield Security</h2>
+            </div>
+            <div class="detail-body">
+                <div class="detail-img-box">
+                    <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80" alt="Cybersecurity Detail">
+                </div>
+                <div class="detail-info">
+                    <h4>Zero-Trust Framework</h4>
+                    <p>सुरक्षा के साथ कोई समझौता नहीं। हम आपके डेटा को एन्क्रिप्ट करते हैं और अनधिकृत एक्सेस को रोकने के लिए एडवांस्ड फायरवॉल और AI थ्रेट डिटेक्टर का उपयोग करते हैं।</p>
+                    <ul>
+                        <li>Real-Time Anomaly Mitigation</li>
+                        <li>End-to-End Advanced Encryption</li>
+                        <li>Compliance & Threat Audit Handling</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Operations Details -->
+    <section id="ops" class="detail-section">
+        <div class="detail-container">
+            <div class="detail-header">
+                <h2>24/7 Operations Control</h2>
+            </div>
+            <div class="detail-body">
+                <div class="detail-info">
+                    <h4>Always-On Operations Centre</h4>
+                    <p>हमारी नोक (NOC) टीम और ऑटोमेटेड बॉट्स आपके सर्वर की सेहत पर हर सेकंड नज़र रखते हैं ताकि आपकी डिजिटल सेवाएं बिना रुके 365 दिन चलती रहें।</p>
+                    <ul>
+                        <li>99.99% Uptime SLA Guarantee</li>
+                        <li>Autonomous Incident Self-Healing</li>
+                        <li>Global Live Monitoring Dashboard</li>
+                    </ul>
+                </div>
+                <div class="detail-img-box">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" alt="Operations Detail">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Solutions Details (New) -->
+    <section id="ai" class="detail-section">
+        <div class="detail-container">
+            <div class="detail-header">
+                <h2>Intelligent AI Workflows</h2>
+            </div>
+            <div class="detail-body">
+                <div class="detail-img-box">
+                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80" alt="AI Technology Detail">
+                </div>
+                <div class="detail-info">
+                    <h4>Cognitive Systems & Automation</h4>
+                    <p>आने वाले समय की मांग के अनुसार सिस्टम में जेनरेटिव एआई और प्रेडिक्टिव मॉडल्स का एकीकरण, जो आपके ऑपरेशन्स को स्मार्ट और ऑटो-पायलट मोड पर ले जाता है।</p>
+                    <ul>
+                        <li>Generative AI Engine Pipelines</li>
+                        <li>Predictive Fault & Traffic Forecasting</li>
+                        <li>Smart Custom Intent Automations</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Omnicoreops. All rights reserved. Architecting the future.</p>
+    </footer>
+
+    <!-- JavaScript for Interactions -->
     <script>
-        const logo = document.getElementById('mainLogo');
-        logo.addEventListener('click', () => {
-            logo.style.transform = 'rotateY(360deg)';
+        // 3D Logo Rotation Animation
+        function animateLogo() {
+            const logo = document.getElementById('logo');
+            logo.classList.add('rotate');
             setTimeout(() => {
-                logo.style.transform = 'rotateY(0deg)';
-            }, 500);
+                logo.classList.remove('rotate');
+            }, 800);
+        }
+
+        // Vanilla JavaScript 3D Tilt Effect on Cards (Mouse movement)
+        const cards = document.querySelectorAll('.service-card');
+        
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left; // mouse position inside card
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                // Calculate tilt angles based on mouse offset from center
+                const rotateX = ((centerY - y) / centerY) * 10; // max 10 deg
+                const rotateY = ((x - centerX) / centerX) * 10;
+                
+                card.style.transform = `translateY(-10px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
+            });
         });
     </script>
 </body>
